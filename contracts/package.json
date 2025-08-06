@@ -1,0 +1,21 @@
+{
+  "name": "charity-contracts",
+  "version": "1.0.0",
+  "description": "Smart contracts for charity DApp",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy": "hardhat run scripts/deploy.js",
+    "node": "hardhat node",
+    "dev": "hardhat node --hostname 0.0.0.0"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "hardhat": "^2.17.2"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.9.3"
+  },
+  "author": "",
+  "license": "ISC"
+}

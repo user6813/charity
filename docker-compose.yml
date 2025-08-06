@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./server
+    container_name: charity-backend
+    restart: unless-stopped
+    ports:
+      - '3001:3001'
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    env_file:
+      - ./server/.env.example
+    depends_on:
+      - contracts
+
+  frontend:
+    build: ./client
+    container_name: charity-frontend
+    restart: unless-stopped
+    ports:
+      - '5173:5173'
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    environment:
+      - VITE_BACKEND_URL=http://localhost:3001
+    depends_on:
+      - backend
+
+  contracts:
+    build: ./contracts
+    container_name: charity-contracts
+    restart: unless-stopped
+    ports:
+      - '8545:8545'
+    volumes:
+      - ./contracts:/contracts
+      - /contracts/node_modules
+    command: npx hardhat node --hostname 0.0.0.0
