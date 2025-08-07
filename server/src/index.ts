@@ -1,30 +1,30 @@
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
+import express, { Express } from "express";
+import dotenv from "dotenv";
+import Router from './routes/index'
+import DbConnect from "./config/dbConnect";
+import morgan from 'morgan'
+import { errorHandler, errorRouteHandler } from "./utils/error";
+import swaggerUi from "swagger-ui-express"
+import swaggerDocs from "./swaggers";
+import cors from 'cors'
 
 dotenv.config();
 
-const app = express();
-const PORT = process.env.PORT || 3001;
+const app: Express = express();
+const port = process.env.PORT ?? 3000;
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+DbConnect()
 
-// Routes
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'Charity server is running' });
-});
+app.use(cors())
+app.use(morgan('dev'))
+app.use(express.json())
 
-app.get('/api/charities', (req, res) => {
-  // Mock data for now
-  res.json([
-    { id: 1, name: 'Education Fund', description: 'Supporting education worldwide' },
-    { id: 2, name: 'Healthcare Initiative', description: 'Providing medical aid' }
-  ]);
-});
+app.use("/api",Router);
+app.use("/api-docs",swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`📊 Health check: http://localhost:${PORT}/api/health`);
+app.use(errorRouteHandler)
+app.use(errorHandler)
+
+app.listen(port, () => {
+  console.log(`[server]: Server is running at http://localhost:${port}`);
 });
