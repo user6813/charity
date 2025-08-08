@@ -9,8 +9,9 @@ charity/
 ├── backend/        # Node.js backend (Express + nodemon)
 ├── client/         # React frontend (Vite)
 ├── contracts/      # Solidity contracts (Hardhat)
-├── docker-compose.yml
-└── README.md
+├── infra/          # Infrastructure (Docker Compose)
+├── README.md
+└── start.sh
 ```
 
 ## Tech Stack
@@ -30,7 +31,7 @@ charity/
 ```bash
 git clone <repo-url>
 cd charity
-docker-compose up --build
+./start.sh up
 ```
 
 - Frontend: [http://localhost:5173](http://localhost:5173)
@@ -47,12 +48,12 @@ docker-compose up --build
 
 ### Useful Commands
 
-- Start all services: `docker-compose up --build`
-- Stop all services: `docker-compose down`
-- Install new backend deps: `docker-compose run backend npm install <package>`
-- Install new frontend deps: `docker-compose run frontend npm install <package>`
-- Compile contracts: `docker-compose run contracts npx hardhat compile`
-- Deploy contracts: `docker-compose run contracts npx hardhat run scripts/deploy.js --network localhost`
+- Start all services: `./start.sh up`
+- Stop all services: `./start.sh down`
+- Install new backend deps: `./start.sh run backend npm install <package>`
+- Install new frontend deps: `./start.sh run frontend npm install <package>`
+- Compile contracts: `./start.sh run contracts npx hardhat compile`
+- Deploy contracts: `./start.sh run contracts npx hardhat run scripts/deploy.js --network localhost`
 
 ---
 

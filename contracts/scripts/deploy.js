@@ -4,7 +4,9 @@ async function main() {
   const Charity = await hre.ethers.getContractFactory("Charity");
   const charity = await Charity.deploy();
   await charity.deployed();
-  console.log("Charity deployed to:", charity.address);
+  console.log("Charity deployed to:", charity.address, "at block:", charity.deployTransaction.blockNumber);
+  console.log("Charity deployed by:", charity.deployTransaction.from);
+  console.log("Result", charity);
 }
 
 main()

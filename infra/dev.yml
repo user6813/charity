@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: ../client
+    container_name: charity-frontend
+    restart: unless-stopped
+    ports:
+      - '5173:5173'
+    volumes:
+      - ../client:/app
+      - /app/node_modules
+    environment:
+      - VITE_BACKEND_URL=http://localhost:3001
+    depends_on:
+      - backend
+
+  backend:
+    build: ../server
+    container_name: charity-backend
+    restart: unless-stopped
+    ports:
+      - '3001:3001'
+    volumes:
+      - ../server:/app
+      - /app/node_modules
+    env_file:
+      - ../server/.env.example
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=charity_db
+      - DB_USER=admin
+      - DB_PASSWORD=admin
+    depends_on:
+      - contracts
+      - postgres
+
+  contracts:
+    build: ../contracts
+    container_name: charity-contracts
+    restart: unless-stopped
+    ports:
+      - '8545:8545'
+    volumes:
+      - ../contracts:/contracts
+      - /contracts/node_modules
+    command: npx hardhat node --hostname 0.0.0.0
+
+  postgres:
+    image: postgres:14
+    container_name: charity-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: charity_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - '5432:5432'
+    volumes:
+      - charity_postgres_data:/var/lib/postgresql/data
+
+
+volumes:
+  charity_postgres_data:
