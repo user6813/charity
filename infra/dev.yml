@@ -1,17 +1,31 @@
 version: '3.8'
 
 services:
+  frontend:
+    build: ../client
+    container_name: charity-frontend
+    restart: unless-stopped
+    ports:
+      - '5173:5173'
+    volumes:
+      - ../client:/app
+      - /app/node_modules
+    environment:
+      - VITE_BACKEND_URL=http://localhost:3001
+    depends_on:
+      - backend
+
   backend:
-    build: ./server
+    build: ../server
     container_name: charity-backend
     restart: unless-stopped
     ports:
       - '3001:3001'
     volumes:
-      - ./server:/app
+      - ../server:/app
       - /app/node_modules
     env_file:
-      - ./server/.env.example
+      - ../server/.env.example
     environment:
       - DB_HOST=postgres
       - DB_PORT=5432
@@ -22,28 +36,14 @@ services:
       - contracts
       - postgres
 
-  frontend:
-    build: ./client
-    container_name: charity-frontend
-    restart: unless-stopped
-    ports:
-      - '5173:5173'
-    volumes:
-      - ./client:/app
-      - /app/node_modules
-    environment:
-      - VITE_BACKEND_URL=http://localhost:3001
-    depends_on:
-      - backend
-
   contracts:
-    build: ./contracts
+    build: ../contracts
     container_name: charity-contracts
     restart: unless-stopped
     ports:
       - '8545:8545'
     volumes:
-      - ./contracts:/contracts
+      - ../contracts:/contracts
       - /contracts/node_modules
     command: npx hardhat node --hostname 0.0.0.0
 
@@ -59,6 +59,7 @@ services:
       - '5432:5432'
     volumes:
       - charity_postgres_data:/var/lib/postgresql/data
+
 
 volumes:
   charity_postgres_data:
