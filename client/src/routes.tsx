@@ -4,6 +4,7 @@ import PageNotFound from "./pages/PageNotFound";
 import Layout from "./components/layout/Layout";
 import Auth from "./pages/Auth";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Campaigns from "./pages/Campaigns";
 
 const routes = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const routes = createBrowserRouter([
       {
         path: '/dashboard',
         element: <Dashboard/>
+      },
+      {
+        path: '/campaigns',
+        element: <Campaigns/>
       }
     ]
   },

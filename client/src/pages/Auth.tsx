@@ -22,10 +22,6 @@ const Auth = () => {
     } else {
       await signup(email, password);
     }
-    // If error is set, show alert (will not redirect due to isLoggedIn remaining false)
-    if (error) {
-      alert(error);
-    }
   };
 
   return (

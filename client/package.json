@@ -11,11 +11,13 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.11",
+    "axios": "^1.11.0",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.8.0",
+    "react-toastify": "^11.0.5",
     "stream-browserify": "^3.0.0",
     "tailwindcss": "^4.1.11"
   },

@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { LOGIN_API, SIGNUP_API } from '../constants/api';
+import type { GlobalResponse } from '../types/global';
+import { toast } from 'react-toastify';
 
 interface AuthState {
   isLoggedIn: boolean;
@@ -26,13 +30,20 @@ export const useAuth = () => {
   const login = async (email: string, password: string) => {
     setLoading(true);
     setError(null);
-    // Simulate login (replace with real logic)
-    await new Promise(res => setTimeout(res, 700));
-    if (email && password) {
-      setAuth({ isLoggedIn: true, user: { email } });
-      localStorage.setItem('loggedIn', 'true');
-    } else {
-      setError('Invalid credentials');
+    try {
+      const response = await axios.post<GlobalResponse<{ email: string }>>(LOGIN_API, { email, password });
+      if (response.data.success && response.data.data) {
+        setAuth({ isLoggedIn: true, user: { email: response.data.data.email } });
+        localStorage.setItem('loggedIn', 'true');
+        setError(null);
+        toast.success('Login successful!');
+      } else {
+        setError(response.data.message || 'Login failed');
+        toast.error(response.data.message || 'Login failed');
+      }
+    } catch (err: any) {
+      setError(err.response?.data?.message || err.message || 'Login error');
+      toast.error(err.response?.data?.message || err.message || 'Login error');
     }
     setLoading(false);
   };
@@ -40,13 +51,20 @@ export const useAuth = () => {
   const signup = async (email: string, password: string) => {
     setLoading(true);
     setError(null);
-    // Simulate signup (replace with real logic)
-    await new Promise(res => setTimeout(res, 700));
-    if (email && password) {
-      setAuth({ isLoggedIn: true, user: { email } });
-      localStorage.setItem('loggedIn', 'true');
-    } else {
-      setError('Signup failed');
+    try {
+      const response = await axios.post<GlobalResponse<{ email: string }>>(SIGNUP_API, { email, password });
+      if (response.data.success && response.data.data) {
+        setAuth({ isLoggedIn: true, user: { email: response.data.data.email } });
+        localStorage.setItem('loggedIn', 'true');
+        setError(null);
+        toast.success('Sign up successful!');
+      } else {
+        setError(response.data.message || 'Sign up failed');
+        toast.error(response.data.message || 'Sign up failed');
+      }
+    } catch (err: any) {
+      setError(err.response?.data?.message || err.message || 'Sign up error');
+      toast.error(err.response?.data?.message || err.message || 'Sign up error');
     }
     setLoading(false);
   };
