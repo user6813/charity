@@ -62,7 +62,7 @@ const AddCampaignPortal = ({ open, onClose, onAdd }: { open: boolean, onClose: (
   if (!open) return null;
 
   return ReactDOM.createPortal(
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50">
       <div className="bg-white p-6 rounded-lg min-w-[320px] shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold mb-4">Add Campaign</h2>
         <form onSubmit={e => {
@@ -140,7 +140,7 @@ const DonatePortal = ({ open, onClose, onDonate, campaignTitle }: DonatePortalPr
 
   if (!open) return null;
   return ReactDOM.createPortal(
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50">
       <div className="bg-white p-6 rounded-lg min-w-[320px] shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold mb-4">Donate to {campaignTitle || 'Campaign'}</h2>
         <form
