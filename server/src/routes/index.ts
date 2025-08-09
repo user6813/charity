@@ -4,6 +4,7 @@ import UserRoute from "./user"
 import Permission from './permission'
 import Role from './role'
 import RolePermission from './rolePermission'
+import Contract from './contract'
 
 const app: Express = express();
 
@@ -20,6 +21,7 @@ app.use('/user', UserRoute)
 app.use('/permission',Permission)
 app.use('/role',Role)
 app.use('/role-permission',RolePermission)
+app.use('/contract',Contract)
 
 
 

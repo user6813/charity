@@ -29,7 +29,8 @@
     "sequelize-typescript": "^2.1.6",
     "swagger-autogen": "^2.23.7",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.1"
+    "swagger-ui-express": "^5.0.1",
+    "web3": "^4.16.0"
   },
   "devDependencies": {
     "@types/chai": "^5.0.1",
