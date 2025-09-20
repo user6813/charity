@@ -11,7 +11,7 @@ case "$1" in
     docker compose -f $COMPOSE_FILE down
     ;;
   build)
-    docker compose -f $COMPOSE_FILE build --no-cache
+    docker rm -f $(docker ps -a -q --filter "name=^charity") && docker compose -f $COMPOSE_FILE build --no-cache
     ;;
   restart)
     docker compose -f $COMPOSE_FILE down && docker compose -f $COMPOSE_FILE up -d
